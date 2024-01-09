@@ -1,4 +1,4 @@
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import React from 'react';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 
@@ -17,9 +17,9 @@ export default function LoginScreen() {
       <View style={{ padding: 20 }}>
         <Text style={styles.heading}>EV 충전소를 찾는 APP</Text>
         <Text style={styles.desc}>여러분 근처의 충전소를 빠르게 찾을 수 있습니다.</Text>
-        <View>
-          <Text>Login With Google</Text>
-        </View>
+        <TouchableOpacity style={styles.button} onPress={() => console.log('버튼 클릭!')}>
+          <Text style={{ color: 'white', textAlign: 'center' }}>Login With Google</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
   },
   bgImage: {
     width: '100%',
-    height: 200,
+    height: 250,
     marginTop: 20,
     objectFit: 'cover',
   },
@@ -51,5 +51,11 @@ const styles = StyleSheet.create({
     color: '#000',
     color: Colors,
   },
-  button: {},
+  button: {
+    backgroundColor: '#4ECB71',
+    padding: 16,
+    display: 'flex',
+    borderRadius: 99,
+    marginTop: 100,
+  },
 });
