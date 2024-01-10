@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
-import { useCallback } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { useCallback, useEffect, useState } from 'react';
+import { StyleSheet, View } from 'react-native';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import LoginScreen from './App/Screen/LoginScreen';
@@ -8,6 +8,7 @@ import { ClerkProvider, SignedIn, SignedOut } from '@clerk/clerk-expo';
 import * as SecureStore from 'expo-secure-store';
 import { NavigationContainer } from '@react-navigation/native';
 import TabNavigation from './App/Navigations/TabNavigation';
+import * as Location from 'expo-location';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -17,6 +18,30 @@ export default function App() {
     'Pretend-Medium': require('./assets/fonts/Pretendard-Medium.otf'),
     'Pretend-Bold': require('./assets/fonts/Pretendard-Bold.otf'),
   });
+
+  const [location, setLocation] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        setErrorMsg('위치정보 사용동의 거부');
+        return;
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      setLocation(location);
+      console.log(location);
+    })();
+  }, []);
+
+  let text = 'Waiting..';
+  if (errorMsg) {
+    text = errorMsg;
+  } else if (location) {
+    text = JSON.stringify(location);
+  }
 
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded) {
