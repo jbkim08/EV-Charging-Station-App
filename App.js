@@ -4,6 +4,10 @@ import { StyleSheet, Text, View } from 'react-native';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import LoginScreen from './App/Screen/LoginScreen';
+import { ClerkProvider, SignedIn, SignedOut } from '@clerk/clerk-expo';
+import * as SecureStore from 'expo-secure-store';
+import { NavigationContainer } from '@react-navigation/native';
+import TabNavigation from './App/Navigations/TabNavigation';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -24,11 +28,41 @@ export default function App() {
     return null;
   }
 
+  const tokenCache = {
+    async getToken(key) {
+      try {
+        return SecureStore.getItemAsync(key);
+      } catch (err) {
+        return null;
+      }
+    },
+    async saveToken(key, value) {
+      try {
+        return SecureStore.setItemAsync(key, value);
+      } catch (err) {
+        return;
+      }
+    },
+  };
+
   return (
-    <View style={styles.container} onLayout={onLayoutRootView}>
-      <LoginScreen />
-      <StatusBar style="auto" />
-    </View>
+    <ClerkProvider
+      tokenCache={tokenCache}
+      publishableKey={'pk_test_YWxlcnQtbXVsZS0zNi5jbGVyay5hY2NvdW50cy5kZXYk'}
+    >
+      <View style={styles.container} onLayout={onLayoutRootView}>
+        <SignedIn>
+          <NavigationContainer>
+            <TabNavigation />
+          </NavigationContainer>
+        </SignedIn>
+        <SignedOut>
+          <LoginScreen />
+        </SignedOut>
+
+        <StatusBar style="auto" />
+      </View>
+    </ClerkProvider>
   );
 }
 
