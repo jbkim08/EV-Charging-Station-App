@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { useCallback, useEffect, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { SafeAreaView, StyleSheet, View } from 'react-native';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import LoginScreen from './App/Screen/LoginScreen';
@@ -77,7 +77,7 @@ export default function App() {
       publishableKey={'pk_test_YWxlcnQtbXVsZS0zNi5jbGVyay5hY2NvdW50cy5kZXYk'}
     >
       <UserLocationContext.Provider value={{ location, setLocation }}>
-        <View style={styles.container} onLayout={onLayoutRootView}>
+        <SafeAreaView style={styles.container} onLayout={onLayoutRootView}>
           <SignedIn>
             <NavigationContainer>
               <TabNavigation />
@@ -88,7 +88,7 @@ export default function App() {
           </SignedOut>
 
           <StatusBar style="auto" />
-        </View>
+        </SafeAreaView>
       </UserLocationContext.Provider>
     </ClerkProvider>
   );

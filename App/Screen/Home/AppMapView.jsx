@@ -1,14 +1,14 @@
 import { View, StyleSheet, Image } from 'react-native';
 import React, { useContext } from 'react';
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
-import MapStyle from '../Utils/MapViewStyle.json';
-import { UserLocationContext } from '../Context/UserLocationContext';
+import MapStyle from '../../Utils/MapViewStyle.json';
+import { UserLocationContext } from '../../Context/UserLocationContext';
 
 export default function AppMapView() {
   const { location, setLocation } = useContext(UserLocationContext);
   return (
     location?.latitude && (
-      <View>
+      <View style={styles.container}>
         <MapView
           style={styles.map}
           provider={PROVIDER_GOOGLE}
@@ -28,8 +28,8 @@ export default function AppMapView() {
             }}
           >
             <Image
-              source={require('./../../assets/images/car.png')}
-              style={{ backgroundColor: 'tomato' }}
+              source={require('./../../../assets/images/car.png')}
+              style={{ width: 35, height: 35 }}
             />
           </Marker>
         </MapView>
@@ -40,7 +40,7 @@ export default function AppMapView() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    marginTop: 10,
   },
   map: {
     width: '100%',
