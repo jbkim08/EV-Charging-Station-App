@@ -16,11 +16,10 @@ export default function HomeScreen() {
 
 const styles = StyleSheet.create({
   headerContainer: {
-    paddingTop: 30,
-    paddingBottom: 10,
-    paddingHorizontal: 20,
     position: 'absolute',
-    width: '100%',
+    padding: 15,
+    marginRight: 50,
+    width: '85%',
     zIndex: 10,
   },
 });
