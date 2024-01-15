@@ -15,7 +15,7 @@ export default function SearchBar({ searchedLocation }) {
         }}
         query={{
           key: 'AIzaSyBCec0VEJMZ2wdmqV2oSIIA291iwsoZ_k0',
-          language: 'en',
+          language: 'ko',
         }}
       />
     </View>
