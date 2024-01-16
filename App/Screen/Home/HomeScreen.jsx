@@ -29,7 +29,7 @@ export default function HomeScreen() {
     };
 
     GobalApi.NewNearByPlace(data).then((resp) => {
-      console.log(resp.data);
+      console.log(JSON.stringify(resp.data));
     });
   };
 
