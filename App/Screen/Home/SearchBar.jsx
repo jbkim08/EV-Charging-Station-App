@@ -3,6 +3,7 @@ import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplet
 import React from 'react';
 
 export default function SearchBar({ searchedLocation }) {
+  const apiKey = process.env.EXPO_PUBLIC_API_KEY;
   return (
     <View>
       <GooglePlacesAutocomplete
@@ -14,7 +15,7 @@ export default function SearchBar({ searchedLocation }) {
           searchedLocation(details?.geometry?.location);
         }}
         query={{
-          key: 'AIzaSyBCec0VEJMZ2wdmqV2oSIIA291iwsoZ_k0',
+          key: apiKey,
           language: 'ko',
         }}
       />
