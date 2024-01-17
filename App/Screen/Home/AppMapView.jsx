@@ -42,6 +42,7 @@ export default function AppMapView({ placeList }) {
                     latitude: item.location?.latitude,
                     longitude: item.location?.longitude,
                   }}
+                  onPress={() => console.log('마커인덱스', index)}
                 >
                   <Image
                     source={require('./../../../assets/images/marker.png')}
