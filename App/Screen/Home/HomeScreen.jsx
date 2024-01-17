@@ -6,10 +6,12 @@ import SearchBar from './SearchBar';
 import { UserLocationContext } from '../../Context/UserLocationContext';
 import GobalApi from '../../Utils/GobalApi';
 import PlaceListView from './PlaceListView';
+import { SelectMarkerContext } from '../../Context/SelectMarkerContext';
 
 export default function HomeScreen() {
   const { location, setLocation } = useContext(UserLocationContext);
   const [placeList, setPlaceList] = useState([]);
+  const [selectedMarker, setSelectedMarker] = useState(null);
 
   useEffect(() => {
     location && GetNearByPlace();
@@ -37,16 +39,18 @@ export default function HomeScreen() {
   };
 
   return (
-    <View>
-      <View style={styles.headerContainer}>
-        <Header />
-        <SearchBar searchedLocation={(location) => console.log(location)} />
+    <SelectMarkerContext.Provider value={{ selectedMarker, setSelectedMarker }}>
+      <View>
+        <View style={styles.headerContainer}>
+          <Header />
+          <SearchBar searchedLocation={(location) => console.log(location)} />
+        </View>
+        {placeList && <AppMapView placeList={placeList} />}
+        <View style={styles.placeListContainer}>
+          {placeList && <PlaceListView placeList={placeList} />}
+        </View>
       </View>
-      {placeList && <AppMapView placeList={placeList} />}
-      <View style={styles.placeListContainer}>
-        {placeList && <PlaceListView placeList={placeList} />}
-      </View>
-    </View>
+    </SelectMarkerContext.Provider>
   );
 }
 

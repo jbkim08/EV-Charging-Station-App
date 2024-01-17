@@ -3,9 +3,11 @@ import React, { useContext } from 'react';
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import MapStyle from '../../Utils/MapViewStyle.json';
 import { UserLocationContext } from '../../Context/UserLocationContext';
+import { SelectMarkerContext } from '../../Context/SelectMarkerContext';
 
 export default function AppMapView({ placeList }) {
-  const { location, setLocation } = useContext(UserLocationContext);
+  const { location } = useContext(UserLocationContext);
+  const { setSelectedMarker } = useContext(SelectMarkerContext);
   return (
     location?.latitude && (
       <View style={styles.container}>
@@ -42,7 +44,7 @@ export default function AppMapView({ placeList }) {
                     latitude: item.location?.latitude,
                     longitude: item.location?.longitude,
                   }}
-                  onPress={() => console.log('마커인덱스', index)}
+                  onPress={() => setSelectedMarker(index)}
                 >
                   <Image
                     source={require('./../../../assets/images/marker.png')}
