@@ -12,7 +12,7 @@ export default function PlaceItem({ place }) {
       style={{
         width: Dimensions.get('screen').width * 0.9,
         backgroundColor: 'white',
-        margin: 5,
+        margin: Dimensions.get('screen').width * 0.05,
         borderRadius: 10,
       }}
     >
