@@ -1,5 +1,6 @@
 import { View, Text, Image, Dimensions } from 'react-native';
 import React from 'react';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
 
 export default function PlaceItem({ place }) {
   //전체주소 https://places.googleapis.com/v1/NAME/media?key=API_KEY&PARAMETERS
@@ -38,6 +39,18 @@ export default function PlaceItem({ place }) {
         <Text style={{ fontFamily: 'Pretend-Medium' }}>
           충전기기수 : {place?.evChargeOptions?.connectorCount ?? '모름'}
         </Text>
+        <View
+          style={{
+            padding: 12,
+            backgroundColor: '#C7EA46',
+            borderRadius: 6,
+            paddingHorizontal: '40%',
+            flexDirection: 'row',
+          }}
+        >
+          <FontAwesome name="location-arrow" size={24} color="white" />
+          <Text style={{ color: 'white', marginLeft: 10 }}>이동</Text>
+        </View>
       </View>
     </View>
   );
