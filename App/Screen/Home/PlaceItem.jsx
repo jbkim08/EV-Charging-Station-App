@@ -5,7 +5,7 @@ import { doc, setDoc } from 'firebase/firestore';
 import { db } from '../../Utils/FirebaseConfig';
 import { useUser } from '@clerk/clerk-expo';
 
-export default function PlaceItem({ place }) {
+export default function PlaceItem({ place, isFav }) {
   //전체주소 https://places.googleapis.com/v1/NAME/media?key=API_KEY&PARAMETERS
   const PLACE_PHOTO_BASE_URL = 'https://places.googleapis.com/v1/';
   const apiKey = process.env.EXPO_PUBLIC_API_KEY;
@@ -33,7 +33,11 @@ export default function PlaceItem({ place }) {
         style={{ position: 'absolute', right: 0, margin: 10, zIndex: 10 }}
         onPress={() => onSetFav(place)}
       >
-        <FontAwesome name="heart-o" size={24} color="coral" />
+        {isFav ? (
+          <FontAwesome name="heart" size={24} color="coral" />
+        ) : (
+          <FontAwesome name="heart-o" size={24} color="coral" />
+        )}
       </Pressable>
       <Image
         source={
