@@ -31,7 +31,9 @@ export default function PlaceListView({ placeList }) {
     user && getFav();
   }, [user]);
 
-  const getFav = async () => {
+  const getFav = async (del = false) => {
+    setFavList([]);
+
     const q = query(
       collection(db, 'favor-place'),
       where('email', '==', user.primaryEmailAddress.emailAddress)

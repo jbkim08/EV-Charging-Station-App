@@ -1,7 +1,7 @@
 import { View, Text, Image, Dimensions, Pressable, ToastAndroid } from 'react-native';
 import React from 'react';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { doc, setDoc } from 'firebase/firestore';
+import { deleteDoc, doc, setDoc } from 'firebase/firestore';
 import { db } from '../../Utils/FirebaseConfig';
 import { useUser } from '@clerk/clerk-expo';
 
@@ -21,6 +21,13 @@ export default function PlaceItem({ place, isFav, markedFav }) {
     ToastAndroid.show('저장됨!', ToastAndroid.TOP);
   };
 
+  const onRemoveFav = async (placeId) => {
+    //console.log(placeId);
+    await deleteDoc(doc(db, 'favor-place', placeId));
+    markedFav();
+    ToastAndroid.show('삭제됨!', ToastAndroid.TOP);
+  };
+
   return (
     <View
       style={{
@@ -32,7 +39,7 @@ export default function PlaceItem({ place, isFav, markedFav }) {
     >
       <Pressable
         style={{ position: 'absolute', right: 0, margin: 10, zIndex: 10 }}
-        onPress={() => onSetFav(place)}
+        onPress={() => (isFav ? onRemoveFav(place.id) : onSetFav(place))}
       >
         {isFav ? (
           <FontAwesome name="heart" size={24} color="coral" />
