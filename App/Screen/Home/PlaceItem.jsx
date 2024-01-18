@@ -5,7 +5,7 @@ import { doc, setDoc } from 'firebase/firestore';
 import { db } from '../../Utils/FirebaseConfig';
 import { useUser } from '@clerk/clerk-expo';
 
-export default function PlaceItem({ place, isFav }) {
+export default function PlaceItem({ place, isFav, markedFav }) {
   //전체주소 https://places.googleapis.com/v1/NAME/media?key=API_KEY&PARAMETERS
   const PLACE_PHOTO_BASE_URL = 'https://places.googleapis.com/v1/';
   const apiKey = process.env.EXPO_PUBLIC_API_KEY;
@@ -17,6 +17,7 @@ export default function PlaceItem({ place, isFav }) {
       ...place,
       email: user.primaryEmailAddress.emailAddress,
     });
+    markedFav();
     ToastAndroid.show('저장됨!', ToastAndroid.TOP);
   };
 

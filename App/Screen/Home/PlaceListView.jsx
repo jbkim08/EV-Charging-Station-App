@@ -59,7 +59,7 @@ export default function PlaceListView({ placeList }) {
         showsHorizontalScrollIndicator={false}
         renderItem={({ item, index }) => (
           <View key={index}>
-            <PlaceItem place={item} isFav={isFav(item)} />
+            <PlaceItem place={item} isFav={isFav(item)} markedFav={() => getFav()} />
           </View>
         )}
       />
