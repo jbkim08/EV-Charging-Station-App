@@ -3,17 +3,20 @@ import React from 'react';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { doc, setDoc } from 'firebase/firestore';
 import { db } from '../../Utils/FirebaseConfig';
+import { useUser } from '@clerk/clerk-expo';
 
 export default function PlaceItem({ place }) {
   //전체주소 https://places.googleapis.com/v1/NAME/media?key=API_KEY&PARAMETERS
   const PLACE_PHOTO_BASE_URL = 'https://places.googleapis.com/v1/';
   const apiKey = process.env.EXPO_PUBLIC_API_KEY;
-
-  //console.log(place.id);
+  const { user } = useUser();
 
   const onSetFav = async (place) => {
     //console.log(place.id);
-    await setDoc(doc(db, 'favor-place', place.id), place);
+    await setDoc(doc(db, 'favor-place', place.id), {
+      ...place,
+      email: user.primaryEmailAddress.emailAddress,
+    });
     ToastAndroid.show('저장됨!', ToastAndroid.TOP);
   };
 
