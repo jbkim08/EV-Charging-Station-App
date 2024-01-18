@@ -1,11 +1,21 @@
-import { View, Text, Image, Dimensions } from 'react-native';
+import { View, Text, Image, Dimensions, Pressable, ToastAndroid } from 'react-native';
 import React from 'react';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
+import { doc, setDoc } from 'firebase/firestore';
+import { db } from '../../Utils/FirebaseConfig';
 
 export default function PlaceItem({ place }) {
   //전체주소 https://places.googleapis.com/v1/NAME/media?key=API_KEY&PARAMETERS
   const PLACE_PHOTO_BASE_URL = 'https://places.googleapis.com/v1/';
   const apiKey = process.env.EXPO_PUBLIC_API_KEY;
+
+  //console.log(place.id);
+
+  const onSetFav = async (place) => {
+    //console.log(place.id);
+    await setDoc(doc(db, 'favor-place', place.id), place);
+    ToastAndroid.show('저장됨!', ToastAndroid.TOP);
+  };
 
   return (
     <View
@@ -16,6 +26,12 @@ export default function PlaceItem({ place }) {
         borderRadius: 10,
       }}
     >
+      <Pressable
+        style={{ position: 'absolute', right: 0, margin: 10, zIndex: 10 }}
+        onPress={() => onSetFav(place)}
+      >
+        <FontAwesome name="heart-o" size={24} color="coral" />
+      </Pressable>
       <Image
         source={
           place?.photos
