@@ -10,8 +10,7 @@ export default function SearchBar({ searchedLocation }) {
         placeholder="EV 충전소 찾기"
         fetchDetails={true}
         onPress={(data, details = null) => {
-          console.log('호출');
-          //console.log(data, details);
+          console.log('위치설정');
           searchedLocation(details?.geometry?.location);
         }}
         query={{
