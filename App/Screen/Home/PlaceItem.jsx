@@ -1,4 +1,14 @@
-import { View, Text, Image, Dimensions, Pressable, ToastAndroid } from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  Dimensions,
+  Pressable,
+  ToastAndroid,
+  Platform,
+  Linking,
+  TouchableOpacity,
+} from 'react-native';
 import React from 'react';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { deleteDoc, doc, setDoc } from 'firebase/firestore';
@@ -26,6 +36,27 @@ export default function PlaceItem({ place, isFav, markedFav }) {
     await deleteDoc(doc(db, 'favor-place', placeId));
     markedFav();
     ToastAndroid.show('삭제됨!', ToastAndroid.TOP);
+  };
+
+  const onDirectionClick = () => {
+    const url = Platform.select({
+      ios:
+        'maps:' +
+        place.location.latitue +
+        ',' +
+        place.location.longitude +
+        '?q=' +
+        place.formattedAddress,
+      android:
+        'geo:' +
+        place.location.latitue +
+        ',' +
+        place.location.longitude +
+        '?q=' +
+        place.displayName?.text,
+    });
+
+    Linking.openURL(url);
   };
 
   return (
@@ -70,18 +101,22 @@ export default function PlaceItem({ place, isFav, markedFav }) {
         <Text style={{ fontFamily: 'Pretend-Medium' }}>
           충전기기수 : {place?.evChargeOptions?.connectorCount ?? '모름'}
         </Text>
-        <View
+
+        <TouchableOpacity
+          onPress={onDirectionClick}
           style={{
             padding: 12,
             backgroundColor: '#C7EA46',
             borderRadius: 6,
-            paddingHorizontal: '40%',
+            paddingHorizontal: '10%',
+            maxWidth: '40%',
+            marginStart: 'auto',
             flexDirection: 'row',
           }}
         >
           <FontAwesome name="location-arrow" size={24} color="white" />
           <Text style={{ color: 'white', marginLeft: 10 }}>이동</Text>
-        </View>
+        </TouchableOpacity>
       </View>
     </View>
   );
